@@ -11,7 +11,7 @@ def get_canli_tv_m3u8_best_folder():
         "Referer": "https://tvheryerde.com",
         "Origin": "https://tvheryerde.com",
         "Accept-Encoding": "gzip",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJjZ2QiOiIwOTNkNzIwYS01MDJjLTQxZWQtYTgwZi0yYjgxNjk4NGZiOTUiLCJkaSI6IjBmYTAzNTlkLWExOWItNDFiMi05ZTczLTI5ZWNiNjk2OTY0MCIsImFwdiI6IjEuMC4wIiwiZW52IjoiTElWRSIsImFibiI6IjEwMDAiLCJzcGdkIjoiYTA5MDg3ODQtZDEyOC00NjFmLWI3NmItYTU3ZGViMWI4MGNjIiwiaWNoIjoiMCIsInNnZCI6ImViODc3NDRjLTk4NDItNDUwNy05YjBhLTQ0N2RmYjg2NjJhZCIsImlkbSI6IjAiLCJkY3QiOiIzRUY3NSIsImlhIjoiOjpmZmZmOjEwLjAuMC41IiwiY3NoIjoiVFJLU1QiLCJpcGIiOiIwIn0.bT8PK2SvGy2CdmbcCnwlr8RatdDiBe_08k7YlnuQqJE"
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJjZ2QiOiIwOTNkNzIwYS01MDJjLTQxZWQtYTgwZi0yYjgxNjk4NGZiOTUiLCJkaSI6IjBmYTAzNTlkLWExOWItNDFiMi05ZTczLTI5ZWNiNjk2OTY0MCIsImFwdiI6IjEuMC4wIiwiZW52IjoiTElWRSIsImFibiI6IjEwMDAiLCJzcGdkIjoiYTA5MDg3ODQtZDEyOC00NjFmLWI3NmItYTU3ZGViMWI4MGNjIiwiaWNoIjoiMCIsInNnZCI6ImViODc3NDRjLTk4NDItNDUwNy05YjBhLTQ0N2RmYjg2NjJhZCIsImlkbSI6IjAiLCJkY3QiOiIzRUY3NSIsImlhIjoiOjpmZmZmOjEwLjAuMC41IiwiY3NoIjoiVFJLU1QiLCJpcGIiOiIwIn0.bT8PK2SvGy2CdmbcCnwlr8RatdDiBe_08k7YlnuQqJE"  # token'ını buraya koy
     }
 
     params = {"checkip": "false"}
@@ -36,9 +36,11 @@ def get_canli_tv_m3u8_best_folder():
         channels = data['Data']['AllChannels']
         print(f"✅ {len(channels)} kanal bulundu")
 
-        base_folder = "kbl.m3u8"
+        # Ana klasör ve best alt klasörü
+        base_folder = "kbl"
         best_folder = os.path.join(base_folder, "best")
         os.makedirs(best_folder, exist_ok=True)
+        print(f"Klasörler oluşturuldu: {base_folder}/ ve {best_folder}/")
 
         kanal_sayisi = 0
 
@@ -73,7 +75,6 @@ def get_canli_tv_m3u8_best_folder():
             best_res = 0
             for i, line in enumerate(master_lines):
                 if line.startswith("#EXT-X-STREAM-INF"):
-                    # RESOLUTION=WxH değerini bul
                     parts = line.split(",")
                     res_part = [p for p in parts if "RESOLUTION=" in p]
                     if res_part:
@@ -82,15 +83,13 @@ def get_canli_tv_m3u8_best_folder():
                             width, height = map(int, res_text.split("x"))
                             if height > best_res:
                                 best_res = height
-                                # URL bir sonraki satır
                                 if i + 1 < len(master_lines):
                                     best_url = master_lines[i+1].strip()
                         except:
                             continue
 
             if not best_url:
-                print(f"⚠ {name} için kalite bulunamadı, master URL kullanılıyor")
-                best_url = hls_master_url
+                best_url = hls_master_url  # kalite bulunamazsa master kullan
 
             # Dosyaya yaz
             with open(file_path, "w", encoding="utf-8") as f:
