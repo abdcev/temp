@@ -1,82 +1,88 @@
 import requests
 import json
 import gzip
+import os
+import re
 from io import BytesIO
 
-def get_canli_tv_m3u():
-    """"""
-    
+def get_best_quality_url(master_url):
+    """Master m3u8 linkinden en yüksek çözünürlüğü seçer"""
+    try:
+        r = requests.get(master_url, timeout=10)
+        lines = r.text.splitlines()
+        
+        best_bandwidth = -1
+        best_url = master_url # Bulamazsa orijinali döner
+        
+        for i in range(len(lines)):
+            if "#EXT-X-STREAM-INF" in lines[i]:
+                # BANDWIDTH değerini yakala
+                bandwidth_match = re.search(r"BANDWIDTH=(\d+)", lines[i])
+                if bandwidth_match:
+                    bandwidth = int(bandwidth_match.group(1))
+                    if bandwidth > best_bandwidth:
+                        best_bandwidth = bandwidth
+                        # Bir sonraki satır linktir
+                        sub_url = lines[i+1]
+                        if not sub_url.startswith("http"):
+                            # Göreceli link ise ana URL ile birleştir
+                            base_url = master_url.rsplit('/', 1)[0]
+                            best_url = f"{base_url}/{sub_url}"
+                        else:
+                            best_url = sub_url
+        return best_url
+    except:
+        return master_url
+
+def create_separate_m3u8():
     url = "https://core-api.kablowebtv.com/api/channels"
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
-        "Referer": "https://tvheryerde.com",
-        "Origin": "https://tvheryerde.com",
-        "Cache-Control": "max-age=0",
-        "Connection": "keep-alive",
-        "Accept-Encoding": "gzip",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJjZ2QiOiIwOTNkNzIwYS01MDJjLTQxZWQtYTgwZi0yYjgxNjk4NGZiOTUiLCJkaSI6IjBmYTAzNTlkLWExOWItNDFiMi05ZTczLTI5ZWNiNjk2OTY0MCIsImFwdiI6IjEuMC4wIiwiZW52IjoiTElWRSIsImFibiI6IjEwMDAiLCJzcGdkIjoiYTA5MDg3ODQtZDEyOC00NjFmLWI3NmItYTU3ZGViMWI4MGNjIiwiaWNoIjoiMCIsInNnZCI6ImViODc3NDRjLTk4NDItNDUwNy05YjBhLTQ0N2RmYjg2NjJhZCIsImlkbSI6IjAiLCJkY3QiOiIzRUY3NSIsImlhIjoiOjpmZmZmOjEwLjAuMC41IiwiY3NoIjoiVFJLU1QiLCJpcGIiOiIwIn0.bT8PK2SvGy2CdmbcCnwlr8RatdDiBe_08k7YlnuQqJE"  # Güvenlik için token'ı burada göstermedim
+        "User-Agent": "Mozilla/5.0",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9..." # Buraya güncel token gelmeli
     }
 
-    params = {
-        "checkip": "false"
-    }
-    
+    # Kanalların kaydedileceği klasör
+    output_dir = "kanallar"
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
     try:
-        print("📡 CanliTV API'den veri alınıyor...")
+        response = requests.get(url, headers=headers, params={"checkip": "false"}, timeout=30)
         
-        response = requests.get(url, headers=headers, params=params, timeout=30)
-        response.raise_for_status()
-        
+        # Gzip kontrolü
         try:
             with gzip.GzipFile(fileobj=BytesIO(response.content)) as gz:
                 content = gz.read().decode('utf-8')
         except:
             content = response.content.decode('utf-8')
-        
+
         data = json.loads(content)
-        
-        if not data.get('IsSucceeded') or not data.get('Data', {}).get('AllChannels'):
-            print("❌ CanliTV API'den geçerli veri alınamadı!")
-            return False
-        
-        channels = data['Data']['AllChannels']
-        print(f"✅ {len(channels)} kanal bulundu")
-        
-        with open("kbl.m3u", "w", encoding="utf-8") as f:
-            f.write("\n")
+        channels = data.get('Data', {}).get('AllChannels', [])
+
+        for channel in channels:
+            name = channel.get('Name').replace(" ", "_").replace("/", "-") # Dosya adı uyumlu yap
+            stream_data = channel.get('StreamData', {})
+            hls_url = stream_data.get('HlsStreamUrl') if stream_data else None
             
-            kanal_sayisi = 0
-            kanal_index = 1  
+            if not hls_url or channel.get('Categories', [{}])[0].get('Name') == "Bilgilendirme":
+                continue
+
+            print(f"🔄 İşleniyor: {name}")
             
-            for channel in channels:
-                name = channel.get('Name')
-                stream_data = channel.get('StreamData', {})
-                hls_url = stream_data.get('HlsStreamUrl') if stream_data else None
-                logo = channel.get('PrimaryLogoImageUrl', '')
-                categories = channel.get('Categories', [])
-                
-                if not name or not hls_url:
-                    continue
-                
-                group = categories[0].get('Name', 'Genel') if categories else 'Genel'
-                
-                if group == "Bilgilendirme":
-                    continue
+            # En yüksek kaliteyi bul
+            final_url = get_best_quality_url(hls_url)
 
-                tvg_id = str(kanal_index)
+            # Ayrı m3u8 dosyası oluştur
+            file_path = os.path.join(output_dir, f"{name}.m3u8")
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write("#EXTM3U\n")
+                f.write(f"#EXT-X-VERSION:3\n")
+                f.write(f"{final_url}\n")
 
-                f.write(f'#EXTINF:-1 tvg-id="{tvg_id}" tvg-logo="{logo}" group-title="{group}",{name}\n')
-                f.write(f'{hls_url}\n')
-
-                kanal_sayisi += 1
-                kanal_index += 1  
-        
-        print(f"📺 kbl.m3u dosyası oluşturuldu! ({kanal_sayisi} kanal)")
-        return True
+        print("\n✅ Tüm kanallar için ayrı m3u8 dosyaları 'kanallar' klasöründe oluşturuldu.")
         
     except Exception as e:
         print(f"❌ Hata: {e}")
-        return False
 
 if __name__ == "__main__":
-    get_canli_tv_m3u()
+    create_separate_m3u8()
