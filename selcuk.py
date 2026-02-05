@@ -1,6 +1,5 @@
 import re
 import os
-import shutil
 from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup
 
@@ -58,7 +57,7 @@ def get_m3u8_url(player_url, referer):
         return None
 
 def slugify(name):
-    """Dosya adı için ismi temizler"""
+    """Dosya adı için ismi temizler ve URL uyumlu hale getirir"""
     rep = {'ç':'c','Ç':'C','ş':'s','Ş':'S','ı':'i','İ':'I','ğ':'g','Ğ':'G','ü':'u','Ü':'U','ö':'o','Ö':'O'}
     for k,v in rep.items():
         name = name.replace(k, v)
@@ -71,10 +70,12 @@ def create_individual_files(output_folder="selcuk"):
         print("❌ Çalışan domain bulunamadı!")
         return
 
-    # Klasörü hazırla (varsa önce siler temiz bir liste yapar)
-    if os.path.exists(output_folder):
-        shutil.rmtree(output_folder)
-    os.makedirs(output_folder)
+    # KLASÖR KONTROLÜ: Yoksa oluştur, varsa silme (shutil.rmtree kaldırıldı)
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+        print(f"📂 '{output_folder}' klasörü oluşturuldu.")
+    else:
+        print(f"📂 '{output_folder}' klasörü zaten var, dosyalar güncelleniyor...")
 
     players = get_player_links(html)
     if not players: return
@@ -88,7 +89,7 @@ def create_individual_files(output_folder="selcuk"):
             file_name = f"{slugify(ch['name'])}.m3u8"
             file_path = os.path.join(output_folder, file_name)
             
-            # M3U8 içeriğini oluştur (VLC ve Player uyumlu)
+            # M3U8 içeriği (GitHub Raw linkinden direkt oynatılabilmesi için gerekli taglar)
             content = [
                 "#EXTM3U",
                 f"#EXTINF:-1,{ch['name']}",
@@ -100,12 +101,12 @@ def create_individual_files(output_folder="selcuk"):
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write("\n".join(content))
             
-            print(f"✅ Oluşturuldu: {file_name}")
+            print(f"✅ Hazır: {file_name}")
             ok += 1
         else:
-            print(f"❌ Atlandı: {ch['name']}")
+            print(f"❌ Link çekilemedi: {ch['name']}")
 
-    print(f"\n🚀 İşlem Tamamlandı! {ok} dosya '{output_folder}' klasörüne kaydedildi.")
+    print(f"\n🚀 İşlem Tamamlandı! {ok} dosya hazır.")
 
 if __name__ == "__main__":
     create_individual_files()
