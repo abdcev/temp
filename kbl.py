@@ -41,7 +41,7 @@ def get_youtube_style_raw(master_url, auth_headers):
 # --- ANA KODUN (GELİŞTİRİLMİŞ HALİ) ---
 def get_canli_tv_m3u():
     url = "https://core-api.kablowebtv.com/api/channels"
-    save_folder = "kanallar"
+    save_folder = "kablo"
     
     if not os.path.exists(save_folder):
         os.makedirs(save_folder)
@@ -83,7 +83,7 @@ def get_canli_tv_m3u():
             with open(os.path.join(save_folder, file_name), "w", encoding="utf-8") as f:
                 f.write(youtube_format_content)
 
-        print(f"\n✅ İşlem başarılı! 'kanallar' klasöründeki her m3u8 artık istediğin formatta.")
+        print(f"\n✅ İşlem başarılı! 'kablo' klasöründeki her m3u8 artık istediğin formatta.")
         
     except Exception as e:
         print(f"❌ Hata: {e}")
