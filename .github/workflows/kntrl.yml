@@ -36,16 +36,6 @@ jobs:
         run: |
           python kbl.py
           python selcuk.py
-          python ftb.py
-          python int.py
-          python jst.py
-          python liveeventsfilter.py
-          python oki.py
-          python r.py
-          python r2.py
-          python ml.py
-          python sc.py
-          python an.py
 
       - name: Kanalları Birleştir (Merger)
         continue-on-error: true
