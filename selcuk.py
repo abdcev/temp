@@ -64,7 +64,7 @@ def slugify(name):
         name = name.replace(k, v)
     return re.sub(r"[^a-zA-Z0-9]+", "-", name).strip("-").lower()
 
-def create_individual_files(output_folder="kanallar"):
+def create_individual_files(output_folder="selcuk"):
     print("🔍 Domain aranıyor...")
     domain, html = find_active_domain()
     if not html:
