@@ -1,5 +1,7 @@
 import requests
 import sys
+import os
+import re
 from pathlib import Path
 
 TIMEOUT = 10
@@ -11,6 +13,14 @@ VALID_CONTENT_TYPES = [
     "video/ts",
     "video/x-flv",
 ]
+
+def slugify(name):
+    """Kanal ismini dosya sistemine uygun hale getirir."""
+    rep = {'ç':'c','Ç':'C','ş':'s','Ş':'S','ı':'i','İ':'I','ğ':'g','Ğ':'G','ü':'u','Ü':'U','ö':'o','Ö':'O'}
+    for k,v in rep.items():
+        name = name.replace(k, v)
+    name = re.sub(r"[^a-zA-Z0-9]+", "-", name).strip("-").lower()
+    return name
 
 def is_stream_playable(url: str, headers=None) -> bool:
     headers = headers or {}
@@ -30,25 +40,30 @@ def is_stream_playable(url: str, headers=None) -> bool:
             return content_type in VALID_CONTENT_TYPES
     except requests.RequestException:
         return False
-
     return False
 
-def filter_m3u_playlist(input_path: str, output_path: str):
+def process_and_split_m3u(input_path: str, output_folder: str = "filter"):
+    # Klasör oluştur
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+        print(f"📂 '{output_folder}' klasörü oluşturuldu.")
+
     with open(input_path, "r", encoding="utf-8") as f:
         lines = [line.rstrip() for line in f]
 
-    output_lines = ["#EXTM3U"]
     buffer_tags = []
     buffer_vlcopt = []
+    count = 0
 
     for line in lines:
         if line.startswith("#EXTINF"):
             buffer_tags.append(line)
         elif line.startswith("#EXTVLCOPT"):
             buffer_vlcopt.append(line)
-        elif line.strip():
+        elif line.strip() and not line.startswith("#"):
             url = line.strip()
-            # Convert VLC options to HTTP headers
+            
+            # Header'ları hazırla
             headers = {}
             for opt in buffer_vlcopt:
                 if opt.startswith("#EXTVLCOPT:"):
@@ -56,41 +71,49 @@ def filter_m3u_playlist(input_path: str, output_path: str):
                     if len(key_value) == 2:
                         key, value = key_value
                         key = key.lower()
-                        if key == "http-referrer":
-                            headers["Referer"] = value
-                        elif key == "http-origin":
-                            headers["Origin"] = value
-                        elif key == "http-user-agent":
-                            headers["User-Agent"] = value
+                        if key == "http-referrer": headers["Referer"] = value
+                        elif key == "http-origin": headers["Origin"] = value
+                        elif key == "http-user-agent": headers["User-Agent"] = value
 
-            print(f"Checking: {url}")
+            print(f"Kontrol ediliyor: {url}")
             if is_stream_playable(url, headers=headers):
-                print("  ✓ Playable")
-                output_lines.extend(buffer_tags)
-                output_lines.extend(buffer_vlcopt)
-                output_lines.append(url)
-            else:
-                print("  ✗ Not playable")
+                # Kanal adını ayıkla
+                name_match = re.search(r',([^,]+)$', buffer_tags[0]) if buffer_tags else None
+                raw_name = name_match.group(1).strip() if name_match else f"kanal-{count}"
+                
+                safe_name = slugify(raw_name)
+                file_path = os.path.join(output_folder, f"{safe_name}.m3u8")
 
+                # Münferit dosya içeriği
+                content = ["#EXTM3U"]
+                content.extend(buffer_tags)
+                content.extend(buffer_vlcopt)
+                content.append(url)
+
+                with open(file_path, "w", encoding="utf-8") as f:
+                    f.write("\n".join(content))
+                
+                print(f"  ✓ Çalışıyor: {safe_name}.m3u8")
+                count += 1
+            else:
+                print("  ✗ Çalışmıyor")
+
+            # Buffer temizle
             buffer_tags = []
             buffer_vlcopt = []
 
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write("\n".join(output_lines) + "\n")
-
-    print(f"\nSaved filtered playlist to: {output_path}")
-
+    print(f"\n🚀 Tamamlandı! {count} çalışan kanal '{output_folder}' klasörüne ayrıştırıldı.")
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python filter liveeventsfilter.py input.m3u output.m3u")
+    # Kullanım: python script_adi.py giriş.m3u
+    if len(sys.argv) < 2:
+        print("Kullanım: python filter_script.py input.m3u")
         sys.exit(1)
 
     input_m3u = sys.argv[1]
-    output_m3u = sys.argv[2]
 
     if not Path(input_m3u).exists():
-        print("Input file does not exist.")
+        print("Giriş dosyası bulunamadı.")
         sys.exit(1)
 
-    filter_m3u_playlist(input_m3u, output_m3u)
+    process_and_split_m3u(input_m3u)
