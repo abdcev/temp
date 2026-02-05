@@ -1,4 +1,5 @@
 import os
+import re
 from datetime import datetime
 
 # ---------------- NexaTVManager ----------------
@@ -8,6 +9,7 @@ class NexaTVManager:
         self.base_stream_url = "https://andro.okan11gote12sokan.cfd/checklist/"
         self.logo_url = "https://i.hizliresim.com/8xzjgqv.jpg"
         self.group_title = "NexaTV"
+        self.save_folder = "nexa"  # Kanal dosyalarının toplanacağı klasör
         self.channels = [
             {"name": "TR:beIN Sport 1 HD", "path": "androstreamlivebs1.m3u8"},
             {"name": "TR:beIN Sport 2 HD", "path": "androstreamlivebs2.m3u8"},
@@ -46,42 +48,53 @@ class NexaTVManager:
             {"name": "TR:Exxen 7 HD", "path": "androstreamliveexn7.m3u8"},
         ]
 
-    def calistir(self):
-        """NexaTV kanallarından oluşan M3U içeriğini döndürür."""
-        m3u = ["#EXTM3U"]
+    def slugify(self, name):
+        """Kanal adını dosya sistemine uygun temiz bir hale getirir."""
+        name = name.replace("TR:", "") # Başındaki TR: kısmını temizle
+        rep = {'ç':'c','Ç':'C','ş':'s','Ş':'S','ı':'i','İ':'I','ğ':'g','Ğ':'G','ü':'u','Ü':'U','ö':'o','Ö':'O'}
+        for k,v in rep.items():
+            name = name.replace(k, v)
+        name = re.sub(r"[^a-zA-Z0-9]+", "-", name).strip("-").lower()
+        return name
+
+    def dosyalari_olustur(self):
+        """Her kanal için ayrı m3u8 dosyası oluşturur."""
+        if not os.path.exists(self.save_folder):
+            os.makedirs(self.save_folder)
+            print(f"📂 '{self.save_folder}' klasörü oluşturuldu.")
+
+        ok_count = 0
         for channel in self.channels:
+            # URL Hazırlama
             real_url = f"{self.base_stream_url}{channel['path']}"
             stream_url = f"{self.proxy_prefix}{real_url}"
-            m3u.append(
-                f'#EXTINF:-1 tvg-id="sport.tr" tvg-name="{channel["name"]}" '
-                f'tvg-logo="{self.logo_url}" group-title="{self.group_title}",{channel["name"]}'
-            )
-            m3u.append(stream_url)
-        content = "\n".join(m3u)
-        print(f"NexaTV içerik uzunluğu: {len(content)} karakter")
-        return content
+            
+            # Dosya Adı Hazırlama
+            safe_name = self.slugify(channel['name'])
+            file_name = f"{safe_name}.m3u8"
+            file_path = os.path.join(self.save_folder, file_name)
+
+            # Dosya İçeriği
+            content = [
+                "#EXTM3U",
+                f'#EXTINF:-1 tvg-id="sport.tr" tvg-logo="{self.logo_url}" group-title="{self.group_title}",{channel["name"]}',
+                stream_url,
+                f"\n# Generated: {datetime.utcnow().isoformat()}"
+            ]
+
+            try:
+                with open(file_path, "w", encoding="utf-8") as f:
+                    f.write("\n".join(content))
+                ok_count += 1
+            except Exception as e:
+                print(f"❌ {channel['name']} yazılamadı: {e}")
+
+        print(f"✅ İşlem Tamamlandı: {ok_count} kanal dosyası '{self.save_folder}' klasörüne kaydedildi.")
 
 
 # ---------------- Ana Çalıştırma ----------------
-def gorevi_calistir():
+if __name__ == "__main__":
     print(f"--- NexaTV Görevi Başlatıldı ({datetime.now().strftime('%Y-%m-%d %H:%M:%S')}) ---")
     manager = NexaTVManager()
-    m3u_content = manager.calistir()
-    file_name = "ne.m3u"
-
-    try:
-        with open(file_name, "w", encoding="utf-8") as f:
-            f.write(m3u_content + f"\n\n# Generated: {datetime.utcnow().isoformat()}")
-        print(f"✅ M3U dosyası oluşturuldu: {file_name}")
-    except Exception as e:
-        print(f"❌ Dosya yazılamadı: {e}")
-
+    manager.dosyalari_olustur()
     print("--- Görev Tamamlandı ---")
-
-
-if __name__ == "__main__":
-    gorevi_calistir()
-
-
-
-
