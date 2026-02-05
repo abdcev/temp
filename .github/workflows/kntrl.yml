@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Depoyu Klonla
         uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0 # Tüm geçmişi çek (pull/rebase için gerekli)
         
       - name: Python 3.11.8 Yükle
         uses: actions/setup-python@v5.3.0
@@ -27,9 +29,8 @@ jobs:
       - name: Gereksinimleri Kur
         run: |
           python -m pip install --upgrade pip
-          pip install -U setuptools wheel requests beautifulsoup4
+          pip install -U setuptools wheel requests beautifulsoup4 cloudscraper
           
-      # Görüntüdeki tüm scriptlerin çalıştırılması
       - name: Scriptleri Çalıştır
         continue-on-error: true
         run: |
@@ -44,33 +45,30 @@ jobs:
           python r2.py
           python ml.py
           python sc.py
-          # Eğer yeni paylaştığım Andro (Atom) scriptini eklediysen:
-          # python an.py 
+          python an.py
 
-      # En son tüm dosyaları ve klasörleri birleştiren adım
       - name: Kanalları Birleştir (Merger)
         continue-on-error: true
-        run: python merger.py # Dosya adın farklıysa burayı düzelt (örn: birlestirici.py)
+        run: python merger.py
         
-      - name: Değişiklik Kontrolü ve Sahneleme
-        id: degisiklik_kontrol
-        run: |
-          # Önemli: Yeni oluşturulan tüm klasörleri git'e ekler
-          git add -A 
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "degisiklik=true" >> $GITHUB_OUTPUT
-            echo "✅ Değişiklik tespit edildi."
-          else
-            echo "degisiklik=false" >> $GITHUB_OUTPUT
-            echo "ℹ️ Herhangi bir değişiklik yok."
-          fi
-          
-      - name: Değişiklikleri Commit Et
-        if: steps.degisiklik_kontrol.outputs.degisiklik == 'true'
+      - name: Değişiklikleri İşle ve Push Et
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "🔄 Kanallar güncellendi" \
-                     -m "📺 Tüm kaynaklar (Inat, Jest, Selcuk, Kablo vb.) otomatik güncellendi" \
-                     -m "🕒 İşlem Tarihi: $(date)"
-          git push
+          
+          # Yeni dosyaları ekle
+          git add -A
+          
+          # Değişiklik var mı kontrol et
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "✅ Değişiklikler commit ediliyor..."
+            git commit -m "🔄 Kanallar güncellendi - $(date)"
+            
+            # KRİTİK NOKTA: Uzaktaki değişiklikleri çek ve kendi commitini en üste koy
+            git pull --rebase origin main
+            
+            # Son hali pushla
+            git push origin main
+          else
+            echo "ℹ️ Herhangi bir değişiklik yok, işlem atlanıyor."
+          fi
