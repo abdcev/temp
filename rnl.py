@@ -1,6 +1,7 @@
 import requests
 import re
 import os
+from datetime import datetime
 
 START_URL = "https://url24.link/AtomSporTV"
 SAVE_FOLDER = "rnl"
@@ -54,8 +55,10 @@ def get_channel_m3u8(channel_id, base_domain):
         r2 = requests.get(fetch_url, headers=h, timeout=10)
         data = r2.text
 
-        m3u = re.search(r'"deismackanal":"(.*?)"', data) or \
-              re.search(r'"(?:stream|url|source)":\s*"(.*?\.m3u8)"', data)
+        m3u = (
+            re.search(r'"deismackanal":"(.*?)"', data) or
+            re.search(r'"(?:stream|url|source)":\s*"(.*?\.m3u8)"', data)
+        )
 
         return m3u.group(1).replace("\\", "") if m3u else None
     except:
@@ -89,8 +92,6 @@ def main():
     base_domain = get_base_domain()
     channels = get_tv_channels()
 
-    active_files = set()
-
     for cid, name in channels:
         slug = slugify(name)
         file_path = os.path.join(SAVE_FOLDER, f"{slug}.m3u8")
@@ -98,22 +99,25 @@ def main():
         m3u8 = get_channel_m3u8(cid, base_domain)
 
         if m3u8:
+            now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+
             content = "\n".join([
                 "#EXTM3U",
+                f"# UPDATED: {now}",
                 f"#EXTINF:-1,{name}",
                 f"#EXTVLCOPT:http-referrer={base_domain}",
                 f"#EXTVLCOPT:http-user-agent={headers['User-Agent']}",
                 m3u8
             ])
+
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(content)
 
-            active_files.add(file_path)
-            print(f"✔ Güncellendi: {slug}.m3u8")
+            print(f"Güncellendi: {slug}.m3u8")
         else:
             if os.path.exists(file_path):
                 os.remove(file_path)
-                print(f"✖ Silindi (offline): {slug}.m3u8")
+                print(f"Silindi (offline): {slug}.m3u8")
 
     print("İşlem tamamlandı")
 
