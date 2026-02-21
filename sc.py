@@ -65,7 +65,7 @@ def save_individual_m3u_files(m3u8_links, folder_name="cafe", referer=""):
 
     for cid, url in m3u8_links:
         # Dosya adını kanal ID'sine göre belirle (örn: sbeinsports-1.m3u)
-        file_path = os.path.join(folder_name, f"{cid}.m3u")
+        file_path = os.path.join(folder_name, f"{cid}.m3u8")
         
         # M3U Dosya İçeriği
         lines = [
