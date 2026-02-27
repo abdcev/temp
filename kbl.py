@@ -20,33 +20,32 @@ def get_youtube_style_raw(master_url, auth_headers):
     try:
         r = requests.get(master_url, headers=auth_headers, timeout=10)
         if r.status_code != 200:
-            return f"#EXTM3U\n{master_url}"
+            return master_url # Hata durumunda direkt linki dön
             
         lines = r.text.splitlines()
-        output = ["#EXTM3U"]
+        best_link = master_url
         
         base_url = master_url.rsplit('/', 1)[0]
         
+        # M3U8 içinde dolaşıp en yüksek kaliteyi veya ilk linki bulalım
         for i in range(len(lines)):
-            if "#EXT-X-STREAM-INF" in lines[i]:
-                output.append(lines[i]) 
-                
-                next_line = lines[i+1].strip()
+            if not lines[i].startswith("#") and lines[i].strip():
+                next_line = lines[i].strip()
                 if not next_line.startswith("http"):
-                    full_link = f"{base_url}/{next_line}"
+                    best_link = f"{base_url}/{next_line}"
                 else:
-                    full_link = next_line
+                    best_link = next_line
+                break # İlk bulduğumuz stream linkini alıyoruz
                 
-                output.append(full_link) 
-                
-        return "\n".join(output)
+        return best_link
     except:
-        return f"#EXTM3U\n{master_url}"
+        return master_url
 
 # --- ANA KOD ---
 def get_canli_tv_m3u():
     url = "https://core-api.kablowebtv.com/api/channels"
     save_folder = "kablo"
+    main_m3u_file = "kbl.m3u"
     
     # --- KLASÖR KONTROLÜ ---
     if not os.path.exists(save_folder):
@@ -58,7 +57,7 @@ def get_canli_tv_m3u():
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
         "Referer": "https://tvheryerde.com",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJjZ2QiOiIwOTNkNzIwYS01MDJjLTQxZWQtYTgwZi0yYjgxNjk4NGZiOTUiLCJkaSI6IjBmYTAzNTlkLWExOWItNDFiMi05ZTczLTI5ZWNiNjk2OTY0MCIsImFwdiI6IjEuMC4wIiwiZW52IjoiTElWRSIsImFibiI6IjEwMDAiLCJzcGdkIjoiYTA5MDg3ODQtZDEyOC00NjFmLWI3NmItYTU3ZGViMWI4MGNjIiwiaWNoIjoiMCIsInNnZCI6ImViODc3NDRjLTk4NDItNDUwNy05YjBhLTQ0N2RmYjg2NjJhZCIsImlkbSI6IjAiLCJkY3QiOiIzRUY3NSIsImlhIjoiOjpmZmZmOjEwLjAuMC41IiwiY3NoIjoiVFJLU1QiLCJpcGIiOiIwIn0.bT8PK2SvGy2CdmbcCnwlr8RatdDiBe_08k7YlnuQqJE"
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJjZ2QiOiIwOTNkNzIwYS01MDJjLTQxZWQtYTgwZi0yYjgxNjk4NGZiOTUiLCJkaSI6IjBmYTAzNTlkLWExOWItNDFiMi05ZTczLTI5ZWNiNjk2OTY0MCIsImFwdiI6IjEuMC4wIiwiZW52IjoiTElWRSIsImFibiI6IjEwMDAiLCJzcGdkIjoiYTA5MDg3ODQtZDEyOC00NjFmLWI3NmBe-08k7YlnuQqJE"
     }
 
     try:
@@ -75,9 +74,12 @@ def get_canli_tv_m3u():
         channels = data['Data']['AllChannels']
 
         ok = 0
+        main_m3u_content = ["#EXTM3U"] # Ana dosya içeriği başlangıcı
+
         for channel in channels:
             name = channel.get('Name')
             hls_url = channel.get('StreamData', {}).get('HlsStreamUrl')
+            logo = channel.get('LogoUrl', '')
             
             if not name or not hls_url: continue
             if channel.get('Categories') and channel['Categories'][0].get('Name') == "Bilgilendirme": continue
@@ -88,13 +90,26 @@ def get_canli_tv_m3u():
             
             print(f"🎬 {name} işleniyor...")
             
-            youtube_format_content = get_youtube_style_raw(hls_url, headers)
+            # Alt m3u8 linkini çöz (En yüksek çözünürlük linkini almak için)
+            resolved_url = get_youtube_style_raw(hls_url, headers)
             
+            # 1. Tekil dosyayı kaydet (İsteğinize göre tam içeriği de yazabiliriz)
             with open(os.path.join(save_folder, file_name), "w", encoding="utf-8") as f:
-                f.write(youtube_format_content)
+                f.write(f"#EXTM3U\n{resolved_url}")
+            
+            # 2. Ana m3u listesine ekle
+            main_m3u_content.append(f'#EXTINF:-1 tvg-name="{name}" tvg-logo="{logo}",{name}')
+            main_m3u_content.append(resolved_url)
+            
             ok += 1
 
-        print(f"\n✅ İşlem başarılı! {ok} kanal '{save_folder}' klasörüne kaydedildi.")
+        # --- kbl.m3u DOSYASINI KAYDET ---
+        with open(main_m3u_file, "w", encoding="utf-8") as f:
+            f.write("\n".join(main_m3u_content))
+
+        print(f"\n✅ İşlem başarılı!")
+        print(f"📁 Tekil kanallar '{save_folder}' klasörüne kaydedildi.")
+        print(f"📄 Ana liste '{main_m3u_file}' olarak oluşturuldu.")
         
     except Exception as e:
         print(f"❌ Hata: {e}")
