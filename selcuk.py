@@ -7,15 +7,15 @@ from bs4 import BeautifulSoup
 # Ayarlar
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
 OUTPUT_FOLDER = "selcuk"
+ALL_CHANNELS_FILE = "tum_kanallar.m3u" # Tüm kanalların toplanacağı dosya adı
 
-def find_active_domain(start=1825, end=1900):
+def find_active_domain(start=1825, end=1950): # Aralığı biraz genişlettim
     """Aktif yayın domainini tarayarak bulur."""
     print(f"🔍 {start}-{end} aralığında aktif domain aranıyor...")
     for i in range(start, end + 1):
         url = f"https://www.selcuksportshd{i}.xyz/"
         try:
             req = Request(url, headers=HEADERS)
-            # Timeout süresini 3 saniyeye düşürerek taramayı hızlandırıyoruz
             with urlopen(req, timeout=3) as response:
                 html = response.read().decode('utf-8')
                 if "uxsyplayer" in html or "m3u8" in html:
@@ -37,7 +37,6 @@ def get_player_links(html):
     """Ana sayfadaki kanal linklerini ve isimlerini toplar."""
     soup = BeautifulSoup(html, "html.parser")
     links = []
-    # Sitedeki data-url özniteliğine sahip a etiketlerini bulur
     for a in soup.find_all("a", attrs={"data-url": True}):
         data_url = a["data-url"].strip()
         if data_url.startswith("/"):
@@ -83,20 +82,17 @@ def get_m3u8_url(player_url, referer):
     except:
         return None
 
-def create_individual_files():
-    """Ana akış fonksiyonu: Klasörü temizler ve m3u8 dosyalarını oluşturur."""
+def create_files():
+    """Ana akış: Klasörü temizler, tekil ve toplu m3u dosyalarını oluşturur."""
     domain, html = find_active_domain()
     if not html:
-        print("❌ Çalışan domain bulunamadı! Lütfen aralığı kontrol edin.")
+        print("❌ Çalışan domain bulunamadı!")
         return
 
-    # KLASÖR TEMİZLİĞİ: Her zaman en güncel listeyi tutmak için
+    # Klasör hazırlığı
     if os.path.exists(OUTPUT_FOLDER):
-        print(f"🧹 '{OUTPUT_FOLDER}' klasörü temizleniyor...")
         shutil.rmtree(OUTPUT_FOLDER)
-    
     os.makedirs(OUTPUT_FOLDER)
-    print(f"📂 '{OUTPUT_FOLDER}' klasörü oluşturuldu.")
 
     players = get_player_links(html)
     if not players:
@@ -104,16 +100,16 @@ def create_individual_files():
         return
 
     print(f"📺 {len(players)} kanal işleniyor...\n")
+    
     success_count = 0
+    # Toplu liste içeriği için başlık
+    master_m3u_content = ["#EXTM3U"]
 
     for ch in players:
         m3u8_link = get_m3u8_url(ch["url"], domain)
         if m3u8_link:
-            file_name = f"{slugify(ch['name'])}.m3u8"
-            file_path = os.path.join(OUTPUT_FOLDER, file_name)
-            
-            # M3U8 Dosya İçeriği
-            content = [
+            # Tekil dosya içeriği
+            single_content = [
                 "#EXTM3U",
                 f"#EXTINF:-1,{ch['name']}",
                 f"#EXTVLCOPT:http-referrer={domain}",
@@ -121,18 +117,33 @@ def create_individual_files():
                 m3u8_link
             ]
             
+            # Master listeye ekleme
+            master_m3u_content.append(f"#EXTINF:-1,{ch['name']}")
+            master_m3u_content.append(f"#EXTVLCOPT:http-referrer={domain}")
+            master_m3u_content.append(f"#EXTVLCOPT:http-user-agent={HEADERS['User-Agent']}")
+            master_m3u_content.append(m3u8_link)
+
+            # Tekil dosyayı kaydet
+            file_name = f"{slugify(ch['name'])}.m3u8"
+            file_path = os.path.join(OUTPUT_FOLDER, file_name)
             try:
                 with open(file_path, "w", encoding="utf-8") as f:
-                    f.write("\n".join(content))
-                print(f"✅ Oluşturuldu: {file_name}")
+                    f.write("\n".join(single_content))
                 success_count += 1
-            except Exception as e:
-                print(f"⚠️ Yazma hatası ({ch['name']}): {e}")
+            except:
+                pass
         else:
             print(f"❌ Link çekilemedi: {ch['name']}")
 
+    # TÜM KANALLAR DOSYASINI KAYDET
+    master_file_path = os.path.join(OUTPUT_FOLDER, ALL_CHANNELS_FILE)
+    with open(master_file_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(master_m3u_content))
+
     print(f"\n🚀 İşlem Tamamlandı!")
-    print(f"📊 Toplam: {len(players)} | Başarılı: {success_count} | Başarısız: {len(players)-success_count}")
+    print(f"📂 Klasör: {OUTPUT_FOLDER}")
+    print(f"📄 Ana Liste: {ALL_CHANNELS_FILE}")
+    print(f"📊 Başarılı: {success_count} / {len(players)}")
 
 if __name__ == "__main__":
-    create_individual_files()
+    create_files()
