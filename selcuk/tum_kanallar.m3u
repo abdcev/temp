@@ -19,14 +19,14 @@ https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuksmartspor/playlist.m3u8
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcukbeinsports1/playlist.m3u8
-#EXTINF:-1,Beşiktaş - Kasımpaşa20:00
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3leo.ec876fd9240622.click/live/selcukbeinsports1/playlist.m3u8
 #EXTINF:-1,Konyaspor - Gençlerbirliği20:00
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcukbeinsports2/playlist.m3u8
+#EXTINF:-1,Beşiktaş - Kasımpaşa20:00
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3leo.ec876fd9240622.click/live/selcukbeinsports1/playlist.m3u8
 #EXTINF:-1,AEK - NK Celje20:45
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
@@ -35,19 +35,11 @@ https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
-#EXTINF:-1,Freiburg - Genk20:45
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
 #EXTINF:-1,Lyon - Celta Vigo20:45
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
-#EXTINF:-1,Midtjylland - Nottingham Forest20:45
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
-#EXTINF:-1,Mainz - Sigma Olomouc20:45
+#EXTINF:-1,Freiburg - Genk20:45
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
@@ -55,7 +47,15 @@ https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
-#EXTINF:-1,Roma - Bologna23:00
+#EXTINF:-1,Mainz - Sigma Olomouc20:45
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
+#EXTINF:-1,Midtjylland - Nottingham Forest20:45
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
+#EXTINF:-1,Porto - Stuttgart23:00
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
@@ -63,19 +63,15 @@ https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktrt1/playlist.m3u8
+#EXTINF:-1,Real Betis - Panathinaikos23:00
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
 #EXTINF:-1,Sparta Prag - AZ Alkmaar23:00
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
-#EXTINF:-1,Strasbourg - Rijeka23:00
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
-#EXTINF:-1,Aston Villa - Lille23:00
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
-#EXTINF:-1,Real Betis - Panathinaikos23:00
+#EXTINF:-1,Roma - Bologna23:00
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
@@ -83,7 +79,7 @@ https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
-#EXTINF:-1,Porto - Stuttgart23:00
+#EXTINF:-1,Strasbourg - Rijeka23:00
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
@@ -127,14 +123,14 @@ https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuksmartspor/playlist.m3u8
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcukbeinsports1/playlist.m3u8
-#EXTINF:-1,Beşiktaş - Kasımpaşa20:00
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3leo.ec876fd9240622.click/live/selcukbeinsports1/playlist.m3u8
 #EXTINF:-1,Konyaspor - Gençlerbirliği20:00
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcukbeinsports2/playlist.m3u8
+#EXTINF:-1,Beşiktaş - Kasımpaşa20:00
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3leo.ec876fd9240622.click/live/selcukbeinsports1/playlist.m3u8
 #EXTINF:-1,AEK - NK Celje20:45
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
@@ -143,19 +139,11 @@ https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
-#EXTINF:-1,Freiburg - Genk20:45
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
 #EXTINF:-1,Lyon - Celta Vigo20:45
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
-#EXTINF:-1,Midtjylland - Nottingham Forest20:45
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
-#EXTINF:-1,Mainz - Sigma Olomouc20:45
+#EXTINF:-1,Freiburg - Genk20:45
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
@@ -163,7 +151,15 @@ https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
-#EXTINF:-1,Roma - Bologna23:00
+#EXTINF:-1,Mainz - Sigma Olomouc20:45
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
+#EXTINF:-1,Midtjylland - Nottingham Forest20:45
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
+#EXTINF:-1,Porto - Stuttgart23:00
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
@@ -171,19 +167,15 @@ https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktrt1/playlist.m3u8
+#EXTINF:-1,Real Betis - Panathinaikos23:00
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
 #EXTINF:-1,Sparta Prag - AZ Alkmaar23:00
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
-#EXTINF:-1,Strasbourg - Rijeka23:00
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
-#EXTINF:-1,Aston Villa - Lille23:00
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
-#EXTINF:-1,Real Betis - Panathinaikos23:00
+#EXTINF:-1,Roma - Bologna23:00
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
@@ -191,7 +183,7 @@ https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
-#EXTINF:-1,Porto - Stuttgart23:00
+#EXTINF:-1,Strasbourg - Rijeka23:00
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1825.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.ec876fd9240622.click/live/selcuktabiispor1/playlist.m3u8
