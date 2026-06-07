@@ -3,14 +3,14 @@
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1841.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.33a6243d11525c.click/live/selcukssplus1/playlist.m3u8
-#EXTINF:-1,Anadolu Efes - Fenerbahçe Beko20:00
-#EXTVLCOPT:http-referrer=https://www.selcuksportshd1841.xyz/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://dga1op10s1u3leo.33a6243d11525c.click/live/selcukbeinsports5/playlist.m3u8
 #EXTINF:-1,Baskonia - Joventut Badalona20:00
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1841.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.33a6243d11525c.click/live/selcuksmartspor/playlist.m3u8
+#EXTINF:-1,Anadolu Efes - Fenerbahçe Beko20:00
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd1841.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3leo.33a6243d11525c.click/live/selcukbeinsports5/playlist.m3u8
 #EXTINF:-1,Hırvatistan - Slovenya21:45
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1841.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
@@ -139,6 +139,10 @@ https://dga1op10s1u3leo.33a6243d11525c.click/live/selcuktrt1/playlist.m3u8
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1841.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://dga1op10s1u3leo.33a6243d11525c.click/live/selcuknbatv/playlist.m3u8
+#EXTINF:-1,Eurosport 17/24
+#EXTVLCOPT:http-referrer=https://www.selcuksportshd1841.xyz/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://dga1op10s1u3leo.33a6243d11525c.click/live/selcukeurosport1/playlist.m3u8
 #EXTINF:-1,Eurosport 27/24
 #EXTVLCOPT:http-referrer=https://www.selcuksportshd1841.xyz/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
