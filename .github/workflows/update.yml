@@ -1,0 +1,49 @@
+name: Vavoo Playlist Update
+
+on:
+  workflow_dispatch: # Ermöglicht den manuellen Start über den "Actions" Reiter
+  schedule:
+    - cron: '0 5 * * *' # Automatischer Start täglich um 05:00 Uhr morgens
+
+jobs:
+  update_files:
+    runs-on: ubuntu-latest
+    
+    # WICHTIG: Erlaubt dem GitHub-Bot das Schreiben in dein Repository
+    permissions:
+      contents: write
+
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v4
+
+      - name: Python installieren
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Abhängigkeiten installieren
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Skript ausführen
+        run: python export_script.py
+        # Hier wird dein Python-Skript gestartet, das die M3U und JSON erstellt
+
+      - name: Änderungen speichern und hochladen
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Prüfen, welche Dateien erstellt wurden (für das Log)
+          ls -lh
+          
+          # Alle neuen oder geänderten Dateien (m3u & json) zum Commit hinzufügen
+          git add vavoo_all.m3u vavoo_full.json
+          
+          # Nur committen, wenn sich der Inhalt wirklich geändert hat
+          git commit -m "Automatisches Update: $(date +'%d.%m.%Y %H:%M')" || echo "Keine Änderungen gefunden"
+          
+          # Hochladen in den Main-Branch
+          git push origin main
