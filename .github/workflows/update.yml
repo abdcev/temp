@@ -1,43 +1,47 @@
-name: Vavoo Playlist Update
+name: Kontrol
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
 
 on:
-  workflow_dispatch: # Manuel başlatma
+  workflow_dispatch:
   schedule:
-    - cron: '*/30 * * * *' # Her 30 dakikada bir otomatik çalışır
+    - cron: '*/5 * * * *'  
 
 jobs:
-  update_files:
-    runs-on: ubuntu-latest
-    
+  SelcukGuncelleme:
+    runs-on: ubuntu-24.04 # ubuntu-latest yerine doğrudan kararlı sürüm kullanıldı
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     permissions:
       contents: write
-
     steps:
-      - name: Code auschecken
-        uses: actions/checkout@v4
-
-      - name: Python installieren
-        uses: actions/setup-python@v5
+      - name: Depoyu Klonla
+        uses: actions/checkout@v4 # En son kararlı v4 sürümü
+        
+      - name: Python 3.11.8 Yükle
+        uses: actions/setup-python@v5 # En son kararlı v5 sürümü
         with:
-          python-version: '3.10'
-
-      - name: Abhängigkeiten installieren
+          python-version: 3.11.8
+          
+      - name: Gereksinimleri Kur
         run: |
           python -m pip install --upgrade pip
-          pip install requests
+          pip install -U setuptools wheel Kekik httpx parsel requests cloudscraper beautifulsoup4
+          
+      - name: selcuk.py Çalıştır
+        run: python selcuk.py
 
-      - name: Skript ausführen
-        run: python export_script.py
-
-      - name: Änderungen speichern und hochladen
+      - name: Değişiklik Kontrolü
+        id: degisiklik_kontrol
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          git diff --quiet . || echo "degisiklik=true" >> $GITHUB_OUTPUT
           
-          ls -lh
-          
-          git add vavoo_all.m3u vavoo_full.json
-          
-          git commit -m "Automatisches Update: $(date +'%d.%m.%Y %H:%M')" || echo "Keine Änderungen gefunden"
-          
-          git push origin main
+      - name: Değişiklikleri Commit Et
+        if: steps.degisiklik_kontrol.outputs.degisiklik == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "🔄 Kanallar güncellendi" -m "📺 Selcuk domain kontrolü ve M3U güncellemeleri tamamlandı" -m "🕒 Otomatik işlem - $GITHUB_SHA"
+          git push
