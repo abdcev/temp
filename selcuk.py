@@ -9,7 +9,7 @@ HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 OUTPUT_FOLDER = "selcuk"
 ALL_CHANNELS_FILE = "tum_kanallar.m3u" # Tüm kanalların toplanacağı dosya adı
 
-def find_active_domain(start=170, end=300): # Aralığı biraz genişlettim
+def find_active_domain(start=180, end=300): # Aralığı biraz genişlettim
     """Aktif yayın domainini tarayarak bulur."""
     print(f"🔍 {start}-{end} aralığında aktif domain aranıyor...")
     for i in range(start, end + 1):
