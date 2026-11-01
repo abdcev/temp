@@ -4,8 +4,8 @@ name: Update Turkey M3U Playlist
 
 on:
   # 2 saatte bir çalıştır
-  schedule:
-    - cron: '0 */2 * * *'
+#  schedule:
+#    - cron: '0 */2 * * *'
   
   # Manuel tetikleme
   workflow_dispatch:
